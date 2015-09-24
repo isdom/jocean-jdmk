@@ -70,6 +70,7 @@ import java.util.Vector;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
 
+
 // jmx import
 //
 import javax.management.MBeanServer;
@@ -626,6 +627,8 @@ public class HtmlAdaptorServer
             return getParser();
         if (attribute.equals("Port"))
             return new Integer(getPort());
+        if (attribute.equals("LocalPort"))
+            return new Integer(getLocalPort());
         if (attribute.equals("Protocol"))
             return getProtocol();
         if (attribute.equals("ServedClientCount"))
@@ -636,6 +639,10 @@ public class HtmlAdaptorServer
             return getStateString();
 
         throw new AttributeNotFoundException(attribute+" is unknown in HtmlAdaptorServer");
+    }
+
+    private int getLocalPort() {
+        return null != sockListen ? sockListen.getLocalPort() : this.port;
     }
 
     /**
@@ -1186,6 +1193,7 @@ public class HtmlAdaptorServer
         dattributes[9]  = new MBeanAttributeInfo("ServedClientCount","int","ServedClientCount: The number of clients that have been processed by the HtmlAdaptorServer since its creation.",true,false,false);
         dattributes[10] = new MBeanAttributeInfo("State","int","State: State of the HtmlAdaptorServer.",true,false,false);
         dattributes[11] = new MBeanAttributeInfo("StateString","java.lang.String","StateString: State of the HtmlAdaptorServer.",true,false,false);
+        dattributes[12] = new MBeanAttributeInfo("LocalPort","int","LocalPort: Local Port assigned by OS.",true,false,false);
 
         Constructor[] ctor = this.getClass().getConstructors();
 	for (int i = 0; i < ctor.length; i++) {
@@ -1250,7 +1258,7 @@ public class HtmlAdaptorServer
     private String ddescription = "HtmlAdaptorServer class: Provides a management interface of an agent to Web browser clients.";
 
     /** @serial The list of exposed attributes for the HTML protocol adaptor. */
-    private MBeanAttributeInfo[] dattributes = new MBeanAttributeInfo[12];
+    private MBeanAttributeInfo[] dattributes = new MBeanAttributeInfo[13];
 
     /** @serial The list of public constructors for the HTML protocol adaptor. */
     private MBeanConstructorInfo[] dconstructors = new MBeanConstructorInfo[3];
