@@ -58,6 +58,7 @@ package org.jocean.jdmk.comm;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Vector;
 import java.util.Enumeration;
@@ -515,6 +516,15 @@ public abstract class CommunicatorServer
 	    host = "Unknown host";
 	}
 	return host ;
+    }
+    
+    public String getHostIp() {
+        final String hostname = getHost();
+        try {
+            return InetAddress.getByName(hostname).getHostAddress();
+        } catch (UnknownHostException e) {
+            return "127.0.0.1";
+        }
     }
     
     /**
