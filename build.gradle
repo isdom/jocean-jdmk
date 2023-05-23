@@ -9,5 +9,5 @@ configurations {
 
 dependencies {
     /* log */
-    compile 'org.slf4j:slf4j-api:1.7.36'
+    compile 'org.slf4j:slf4j-api:2.0.7'
 }
